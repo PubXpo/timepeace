@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+  <head th:replace="fragments/layouts/header :: head"> </head>
+  <body>
+    <header id="top_bar_nav">
+      <nav th:replace="fragments/layouts/nav :: nav_top"></nav>
+    </header>
+    <aside class="bg-white" id="left_sidebar_nav">
+      <div class="nav flex-column" id="side_menu">
+        <div class="container">
+          <div id="wrapper">
+            <div id="menu-overlay"></div>
+            <div id="menu">
+              <ul class="ul_menu">
+                <li class="parent">
+                  <a
+                    class="link-dark text-decoration-none fw-semibold fs-4"
+                    th:href="@{/{id}/test (id=${contractor.id})}"
+                    >timepeace</a
+                  >
+                </li>
+                <li class="parent">
+                  <a
+                    class="link-dark text-decoration-none"
+                    th:href="@{/{id}/contractor (id=${contractor.id})}"
+                  >
+                    <i class="bi bi-house-door-fill"></i> Dashboard</a
+                  >
+                </li>
+                <li class="parent">
+                  <i class="bi bi-list-task"></i> Project
+                  <ul class="sub-nav">
+                    <li>
+                      <a class="dropdown-item" th:href="@{/contractor={c_id}/project=ALL (c_id=${contractor.id})}">View Projects</a>
+                    </li>
+                    <li>
+                      <a th:href="@{/{id}/project/new (id=${contractor.id})}">Add Project</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="parent">
+                  <i class="bi bi-gear"></i> Account
+                  <ul class="sub-nav">
+                    <li th:if="${listProfile.isEmpty()}">
+                      <a
+                        class="dropdown-item"
+                        th:href="@{/{id}/profile/new (id=${contractor.id})}"
+                        >Profile Details</a
+                      >
+                    </li>
+                    <li
+                      th:each="prof: ${listProfile}"
+                      th:unless="${listProfile.isEmpty()}"
+                    >
+                      <a
+                        class="dropdown-item"
+                        th:href="@{/{c_id}/profile/{id}/edit (id=${prof.cp_id}, c_id=${prof.contractor.id})}"
+                        >Profile Details</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        th:href="@{/edit/{id} (id=${contractor.id})}"
+                        >Account Settings</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li style="float:bottom" class="parent">
+                  <a class="link-dark text-decoration-none" th:href="@{/{id}/contractor (id=${contractor.id})}">
+                    <i class="bi bi-question-circle"></i> Help</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+    <main
+      style=""
+      class="bg-secondary bg-opacity-10"
+      id="page_container"
+    >
+      <article id="main_content">
+        <section class="clearfix p-3">
+          <div id="page_heading" class="float-start fw-semibold fs-5">
+            <script th:unless="${project.p_id == null}" type="text/javascript"></script>
+            <h1 class="fw-semibold fs-5" th:if="${project.p_id == null}">Add a New Project!</h1>
+            <h1 class="fw-semibold fs-5" th:unless="${project.p_id == null}">
+              Project Number: [[${project.projectNumber}]]
+            </h1>
+          </div>
+          <div class="float-end fs-4">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb fs-6">
+                <li class="breadcrumb-item">
+                  <a th:href="@{/{id}/contractor (id=${contractor.id})}"
+                    >Project</a
+                  >
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">View</li>
+              </ol>
+            </nav>
+          </div>
+        </section>
+        <section th:if="${project.p_id == null}"></section>
+        <section th:unless="${project.p_id == null}"
+          style="margin: -10px 17px 0px 17px" class="bg-white p-4 border border-secondary-opacity-10"
+          th:switch="${project.progress}">
+          <p class="fw-semibold fs-5">Progress:</p>
+          <!--  0%-->
+          <div th:case="'0'" class="progress">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              style="width: 0%"
+              aria-valuenow="0"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
+          </div>
+          <!--  25%-->
+          <div th:case="'25'" class="progress">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              style="width: 25%"
+              aria-valuenow="25"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
+          </div>
+          <!--  50%-->
+          <div th:case="'50'" class="progress">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              style="width: 50%"
+              aria-valuenow="50"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
+          </div>
+          <!--  75%-->
+          <div th:case="'75'" class="progress">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              style="width: 75%"
+              aria-valuenow="75"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
+          </div>
+          <!--  100%-->
+          <div th:case="'100'" class="progress">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              style="width: 100%"
+              aria-valuenow="100"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
+          </div>
+        </section>
+        <section id="upper_main_section">
+          <div class="row p-3">
+            <div  class="col-sm-9">
+              <div style="" class="card rounded-0">
+                <div class="card-body">
+                  <span th:if="${project.p_id == null}">
+                   <span class=" fs-5 fw-semibold text-uppercase card-title">Project details</span>
+                  </span>
+                  <span th:unless="${project.p_id == null}">
+                    <span th:if="${#lists.isEmpty(project)}"></span>
+                    <span th:unless="${#lists.isEmpty(project)}">
+                       <span class=" fs-5 fw-semibold text-uppercase card-title">Project summary</span>
+                      <a class="text-primary" data-bs-target="#editProjectModal" data-bs-toggle="modal">(view full details)
+                        <i class="bi bi-pencil"></i> </a></span>
+                    <span class="float-end fs-5 "><span class="fw-semibold">End Date:</span>
+                      <span th:text="${#dates.format(project.endDate, 'dd-MMM-yyyy')}"></span></span>
+                  </span>
+
+                  <!--edit project details modal-->
+                  <div aria-hidden="true" aria-labelledby="editProjectLabel" class="modal fade" id="editProjectModal"
+                       tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                      <div class="modal-content rounded-0">
+                        <div class="modal-header">
+                          <h2 class="modal-title fs-5" id="editProjectLabel">Enter the details of the Project</h2>
+                          <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form class="row p-4" method="post"
+                                th:action="@{/{c_id}/project/{id}/update (id=${project.p_id}, c_id=${contractor.id})}"
+                                th:object="${project}">
+                            <div th:replace="fragments/forms/project_form :: proj"></div>
+                            <div class="modal-footer" style="margin-top: 20px;">
+                              <button class="btn rounded-0 btn-secondary" data-bs-dismiss="modal" type="button">
+                                Close
+                              </button>
+                              <button class="btn rounded-0 btn-primary" type="submit">Save</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <p class="card-text"></p>
+                  <div th:if="${project.p_id == null}">
+                    <form
+                            class="row p-4"
+                            th:action="@{/project/save}"
+                            th:object="${project}"
+                            method="post"
+                    >
+                      <div th:replace="fragments/forms/project_form :: proj"></div>
+                      <div>
+                        <br />
+                        <button type="submit" class="btn rounded-0 btn-primary">
+                          Save
+                        </button>
+                        <button
+                                class="btn rounded-0 btn-outline-primary"
+                                onclick="window.location.reload();"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  <div th:unless="${project.p_id == null}">
+                    <form  class="row p-4" method="post"
+                           th:action="@{/{c_id}/project/{id}/update (id=${project.p_id}, c_id=${contractor.id})}"
+                           th:object="${project}">
+                      <div th:replace="fragments/forms/project_form :: proj_summary"></div>
+                      <div>
+                        <button type="submit" class="btn rounded-0 btn-primary">
+                          Save
+                        </button>
+                        <button class="btn rounded-0 btn-outline-primary" onclick="window.location.reload();">
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div th:if="${project.p_id == null}"></div>
+              <div th:unless="${project.p_id == null}" style="height: 592px;" class="card rounded-0">
+                <div class="card-body overflow-auto">
+                  <h2 align="center" class="card-title fs-5 fw-semibold text-uppercase">Activity Categories</h2>
+                    <div align="center" class="fw-semibold">[[${message}]]</div>
+                  <p class="card-text"></p>
+
+                  <form  class="" method="post"
+                        th:action="@{/{c_id}/project={p_id}/category/new (c_id=${contractor.id}, p_id=${project.p_id})}"
+                        th:object="${newCategory}">
+                    <div  class="col-md-12 input-group">
+                      <label style="display:none" for="addCategory"> Add Category</label>
+                      <input id="addCategory" class="form-control rounded-0" required th:field="*{categoryName}" type="text" placeholder="new category"/>
+                      <span>
+                        <button aria-label="addCategoryButton" type="submit" class="btn rounded-0 btn-primary">
+                        <i class="bi bi-plus-lg"></i>
+                        </button>
+                      </span>
+                    </div>
+                    <div  hidden class="col-md-6">
+                         <span  th:if="${task.t_id == null}">
+                           <label for="projId"  class="col-4 col-form-label" >Project ID: </label>
+                            <select id="projId" class="form-control"  th:field="*{project.p_id}">
+                        <option th:text="${project.p_id}" th:value="${project.p_id}"></option>
+                      </select>
+                        </span>
+                      <span  th:unless="${task.t_id == null}">
+                        <label for="projId2"  class="col-4 col-form-label" >Project ID: </label>
+                        <input id="projId2"  class="form-control"  th:field="*{project.p_id}" th:value="${project.p_id}"/>
+                      </span>
+                    </div>
+                  </form>
+                  <table  style="text-align: center; vertical-align: middle;" class="table  table-hover bg-white  ">
+                    <thead style="display:none;">
+                    <tr>
+                      <th>|</th>
+                      <th>|</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cat: ${listCategories}">
+
+                      <td aria-label="categoryName">[[${cat.categoryName}]]</td>
+                      <td >
+                        <a aria-label="deleteCategory" class="btn rounded-0 text-danger fw-bold "
+                           th:href="@{/{c_id}/project={p_id}/cat={cat_id}/delete (p_id=${project.p_id}, c_id=${contractor.id}, cat_id=${cat.cat_id})}">
+                          <i class="bi bi-x-lg"></i></a>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          style="margin-top: 20px; margin-bottom: 20px"
+          class="bg-white"
+          id="lower_main_section"
+        >
+        </section>
+
+
+        <section style="margin: 20px 20px 20px 17px" class="bg-white border border-secondary-opacity-10"  >
+            <span class="fs-4 fw-semibold p-4">Active Weeks
+            <a id="toggleWeeksLink" class=" fw-light fs-6"  data-bs-toggle="collapse" href="#collapsePastWeeks"  aria-expanded="false" >
+              ( Toggle Past Weeks )</a>
+            </span>
+              <script>
+              $(document).ready(function() {
+              $("#toggleWeeksLink").click(function () {
+              $("#collapsePastWeeks").toggle()
+              });
+              });
+              </script>
+            <p style="margin-top:-15px;" class="p-4"> <i class="bi bi-info-circle"></i> You can use the search bar to find or add a new date.</p>
+            <form style="margin-top:-95px;" class="float-end p-4 " method="post"
+              th:action="@{/{c_id}/project/{p_id}/task/save (c_id=${contractor.id}, p_id=${project.p_id})}"
+              th:object="${task}">
+            <div  class="col-md-12 input-group " >
+              <label style="display:none" for="weekOf">weekOf</label>
+              <input  id="weekOf" class="form-control rounded-0"  required   name="weekOf" th:value="weekOf" type="date"/>
+              <span>
+                <button aria-label="submitButton" type="submit" class="btn rounded-0 btn-primary">
+                <i class="bi bi-search"></i>
+                </button>
+              </span>
+            </div>
+            <div  hidden class="col-md-6">
+                 <span  th:if="${task.t_id == null}">
+                     <label for="projIdSearch"  class="col-4 col-form-label" >Project ID: </label>
+                      <select id="projIdSearch" class="form-control"  th:field="*{project.p_id}">
+                  <option th:text="${project.p_id}" th:value="${project.p_id}"></option>
+                </select>
+                  </span>
+                 <span  th:unless="${task.t_id == null}">
+                  <label for="projIdSearch2"  class="col-4 col-form-label" >Project ID: </label>
+                  <input id="projIdSearch2"  class="form-control"  th:field="*{project.p_id}" th:value="${project.p_id}"/>
+                </span>
+            </div>
+          </form>
+          <section  class="p-4" >
+            <table id="activeWeeksTable" style="text-align: center; vertical-align: middle; margin-top:-50px;" class="table table-hover bg-white">
+              <caption></caption>
+              <thead >
+              <tr >
+                <th style="text-align: left;  ">Week of</th>
+
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+                <th class="bg-dark bg-opacity-10 fw-bold  border-bottom-0 border-start border-end border-dark">Total</th>
+                <th class="border-start-0 border-end-0">Status</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="totals: ${filterByActive}">
+                <td style="text-align: left">
+                  <i class=" text-primary fs-xs bi bi-pencil"></i>
+                  <a th:text="${#dates.format(totals.weekOf, 'dd-MMM-yy')}" th:href="@{/{c_id}/project/{p_id}/task/week_of/{t_wo}  (c_id=${contractor.id}, p_id=${project.p_id}, t_wo=${totals.weekOf})}">
+                  </a></td>
+
+                <td>[[${totals.sumOfMonday}]]</td>
+                <td>[[${totals.sumOfTuesday}]]</td>
+                <td>[[${totals.sumOfWednesday}]]</td>
+                <td>[[${totals.sumOfThursday}]]</td>
+                <td>[[${totals.sumOfFriday}]]</td>
+                <td>[[${totals.sumOfSaturday}]]</td>
+                <td>[[${totals.sumOfSunday}]]</td>
+                <td class="bg-dark bg-opacity-10 fw-bold  border-bottom-0 border-start border-end border-dark">[[${totals.weekTotal}]]</td>
+                <td class="fw-semibold text-capitalize border-top-0 ">[[${totals.status}]]</td>
+              </tr>
+              </tbody>
+              <tfoot>
+              <tr></tr>
+              </tfoot>
+            </table>
+          </section>
+        </section>
+        <section id="collapsePastWeeks" style="margin: 20px 20px 20px 20px" class="bg-white border border-secondary-opacity-10" >
+          <div>
+            <span class="fs-4 fw-semibold p-4">Past Weeks</span>
+          </div>
+          <section  class="p-4" >
+            <table  id="pastview" style="text-align: center; vertical-align: middle;" class="table table-hover bg-white">
+              <caption></caption>
+              <thead >
+              <tr >
+                <th style="text-align: left; width:60px  ">Week of</th>
+
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+                <th class="bg-dark bg-opacity-10 fw-bold  border-bottom-0 border-start border-end border-dark">Total</th>
+                <th class="border-start-0 border-end-0">Status</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="totals: ${filterByPaid}">
+                <td style="text-align: left">
+                  <i class=" text-primary fs-xs bi bi-eye"></i>
+                  <a th:text="${#dates.format(totals.weekOf, 'dd-MMM-yy')}" th:href="@{/{c_id}/project/{p_id}/task/week_of/{t_wo}  (c_id=${contractor.id}, p_id=${project.p_id}, t_wo=${totals.weekOf})}">
+                  </a></td>
+                <td>[[${totals.sumOfMonday}]]</td>
+                <td>[[${totals.sumOfTuesday}]]</td>
+                <td>[[${totals.sumOfWednesday}]]</td>
+                <td>[[${totals.sumOfThursday}]]</td>
+                <td>[[${totals.sumOfFriday}]]</td>
+                <td>[[${totals.sumOfSaturday}]]</td>
+                <td>[[${totals.sumOfSunday}]]</td>
+                <td class="bg-dark bg-opacity-10 fw-bold  border-bottom-0 border-start border-end border-dark">[[${totals.weekTotal}]]</td>
+                <td class="fw-semibold text-capitalize border-top-0 ">[[${totals.status}]]</td>
+              </tr>
+              </tbody>
+              <tfoot>
+              <tr></tr>
+              </tfoot>
+            </table>
+          </section>
+        </section>
+      </article>
+    </main>
+    <footer id="footer" th:replace="fragments/layouts/footer :: foot"></footer>
+  </body>
+</html>
