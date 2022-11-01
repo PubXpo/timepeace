@@ -11,7 +11,7 @@ It was implemented with contractors in mind. It used surveys on online platforms
 This is a lite demo version.
 <br></br>
 ## Wiki Navigation
-The following links redirects to a guided to the [wiki][wiki] which demonstrates thought process behind engineering concepts and includes a product demo. 
+The following links redirects to a guided [wiki][wiki] which demonstrates the thought process behind engineering concepts and includes a product demo. 
 * ENGINEERING: Model and Designs
   * [Entering client data][enterData]
   * [Inputs and Calculations][inputCalcs]
