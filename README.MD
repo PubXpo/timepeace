@@ -88,8 +88,8 @@ The product is implemented using:
 <br>
 It also implements APIs like:
 
-- HighchartJs API (for date visualization)
-- DataTable API, AJAX (to reuse filter, sort and organising structure)
+- HighchartJs API (for data visualization)
+- DataTable API, AJAX (to reuse filter, sort and organising table structure)
 <br>
 
 ## Contributing
