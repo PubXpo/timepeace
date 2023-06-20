@@ -1,0 +1,195 @@
+<!--project form-->
+<div id="proj" th:fragment="proj" class="form-group row">
+
+    <div class="col-md-6">
+        <label for="newClientName"  class="form-label">Client Name: </label>
+        <input id="newClientName" class="rounded-0 form-control" maxlength="20" minlength="2"
+               required th:field="*{companyName}" type="text"/>
+    </div>
+
+    <div class="col-md-6">
+        <label for="newProjectNumber" class="form-label">Project Number: </label>
+        <input id="newProjectNumber" class="rounded-0 form-control" maxlength="20" minlength="2"
+               required th:field="*{projectNumber}" type="text"/>
+    </div>
+
+    <div class="col-md-6">
+        <label for="newProjectName" lass="form-label">Project Name: </label>
+        <input id="newProjectName"  class="rounded-0 form-control" maxlength="20" minlength="2"
+               required th:field="*{projectName}" type="text"/>
+    </div>
+
+    <div class="col-md-6">
+        <label for="newProjectManager"  class="form-label">Project Manager: </label>
+        <input id="newProjectManager" class="rounded-0 form-control" maxlength="20" minlength="2"
+               required th:field="*{projectManager}" type="text"/>
+    </div>
+
+    <div class="col-md-6">
+        <label for="newCompleted" class="form-label">% Completed: </label>
+        <select id="newCompleted" th:field="*{progress}"  class="rounded-0 form-control list-select">
+            <option th:value="'0'" th:text="0"></option>
+            <option th:value="'25'" th:text="25"></option>
+            <option th:value="'50'" th:text="50"></option>
+            <option th:value="'100'" th:text="100"></option>
+        </select>
+
+    </div>
+
+    <div th:switch="${project.status}" class="col-md-6">
+        <span  th:case="'open'">
+            <label for="newStatus1" class="form-label">Status: </label>
+            <select  id="newStatus1" th:field="*{status}"  class="rounded-0 bg-success text-white form-control list-select">
+                <option  th:value="'open'" th:text="open"></option>
+                <option th:value="'ended'" th:text="ended"></option>
+            </select>
+        </span>
+        <span th:case="'ended'" >
+            <label for="newStatus2" class="form-label">Status: </label>
+            <select id="newStatus2"  th:case="'ended'" th:field="*{status}"  class="rounded-0 bg-warning form-control list-select">
+                <option th:value="'open'" th:text="open"></option>
+                <option th:value="'ended'" th:text="ended"></option>
+            </select>
+        </span>
+    </div>
+
+
+    <div class="col-md-12">
+        <label for="newDescription" class="form-label">Description: </label>
+        <textarea id="newDescription" class="rounded-0 form-control" maxlength="500" minlength="2"
+                  required th:field="*{description}"   rows="3"></textarea>
+        </div>
+
+        <div class="col-md-6">
+            <label for="newAgreedStart" class="form-label">Agreed Start Date: </label>
+            <input id="newAgreedStart"  class="rounded-0 form-control"  required th:field="*{startDate}" type="date"/>
+        </div>
+
+        <div class="col-md-6">
+            <label for="newAgreedEnd"  class="form-label">Agreed End Date: </label>
+            <input id="newAgreedEnd" class="rounded-0 form-control"  required th:field="*{endDate}" type="date"/>
+        </div>
+
+        <div class="col-md-6">
+            <label for="newContractorRole" class="form-label">Contracted Role: </label>
+            <input id="newContractorRole" class="rounded-0 form-control" th:field="*{role}" type="text"/>
+        </div>
+
+        <div class="col-md-6">
+            <label for="newRate" class="form-label">Rate per unit: </label>
+            <input id="newRate" class="rounded-0 form-control" required step="0.25 "
+                   th:field="*{rate}" type="text"/>
+        </div>
+
+        <div class="col-md-12">
+            <label for="newNotes" class="form-label">Notes: </label>
+            <textarea id="newNotes"  class="rounded-0 form-control" maxlength="500" minlength="2"
+                      rows="3" th:field="*{notes}"></textarea>
+        </div>
+
+    <div  hidden class="col-md-6">
+        <span th:if="${project.p_id == null}">
+            <label for="newId" class="col-4 col-form-label" >ID: </label>
+            <select id="newId" class="rounded-0 form-control"  th:field="*{contractor.id}" >
+                <option th:text="${contractor.email}" th:value="${contractor.id}"></option>
+            </select>
+        </span>
+        <span th:unless="${project.p_id == null}">
+            <label for="newId2" class="col-4 col-form-label" >ID: </label>
+            <input id="newId2" class="form-control rounded-0"  th:field="*{contractor.id}"
+                 th:value="${contractor.id}"/>
+        </span>
+        </div>
+</div>
+
+
+<!--project form summary-->
+<div  id="proj_summary" th:fragment="proj_summary" class="form-group row">
+
+    <div class="col-md-6">
+        <label for="contractorRole" class="form-label">Contracted Role: </label>
+        <input id="contractorRole" class="rounded-0 form-control" th:field="*{role}" type="text"/>
+    </div>
+
+    <div class="col-md-6">
+        <label for="clientName"  class="form-label">Client Name: </label>
+        <input id="clientName" class="rounded-0 form-control" maxlength="20" minlength="2"
+               required th:field="*{companyName}" type="text"/>
+    </div>
+
+    <div hidden class="col-md-6">
+        <label for="projectNumber" class="form-label">Project Number: </label>
+        <input id="projectNumber" class="rounded-0 form-control" maxlength="20" minlength="2"
+               required th:field="*{projectNumber}" type="text"/>
+    </div>
+
+    <div class="col-md-6">
+        <label for="projectName" lass="form-label">Project Name: </label>
+        <input id="projectName"  class="rounded-0 form-control" maxlength="20" minlength="2"
+               required th:field="*{projectName}" type="text"/>
+    </div>
+
+    <div class="col-md-6">
+        <label for="projectManager"  class="form-label">Project Manager: </label>
+        <input id="projectManager" class="rounded-0 form-control" maxlength="20" minlength="2"
+               required th:field="*{projectManager}" type="text"/>
+    </div>
+
+    <div class="col-md-6">
+        <label for="completed" class="form-label">% Completed: </label>
+        <select id="completed" th:field="*{progress}"  class="rounded-0 form-control list-select">
+            <option th:value="'0'" th:text="0"></option>
+            <option th:value="'25'" th:text="25"></option>
+            <option th:value="'50'" th:text="50"></option>
+            <option th:value="'100'" th:text="100"></option>
+        </select>
+
+    </div>
+
+    <div th:switch="${project.status}" class="col-md-6">
+        <span  th:case="'open'">
+            <label for="status1" class="form-label">Status: </label>
+            <select  id="status1" th:field="*{status}"  class="rounded-0 bg-success text-white form-control list-select">
+                <option  th:value="'open'" th:text="open"></option>
+                <option th:value="'ended'" th:text="ended"></option>
+            </select>
+        </span>
+        <span th:case="'ended'" >
+            <label for="status2" class="form-label">Status: </label>
+            <select id="status2"  th:case="'ended'" th:field="*{status}"  class="rounded-0 bg-warning form-control list-select">
+                <option th:value="'open'" th:text="open"></option>
+                <option th:value="'ended'" th:text="ended"></option>
+            </select>
+        </span>
+    </div>
+
+
+    <div class="col-md-12">
+        <label for="description" class="form-label">Description: </label>
+        <textarea id="description" class="rounded-0 form-control" maxlength="500" minlength="2"
+                  required th:field="*{description}"   rows="3"></textarea>
+    </div>
+
+    <div hidden class="col-md-6">
+        <label for="agreedStart" class="form-label">Agreed Start Date: </label>
+        <input id="agreedStart"  class="rounded-0 form-control"  required th:field="*{startDate}" type="date"/>
+    </div>
+
+    <div hidden class="col-md-6">
+        <label for="agreedEnd"  class="form-label">Agreed End Date: </label>
+        <input id="agreedEnd" class="rounded-0 form-control"  required th:field="*{endDate}" type="date"/>
+    </div>
+
+
+    <div hidden class="col-md-6">
+        <label for="rate" class="form-label">Rate per unit: </label>
+        <input id="rate" class="rounded-0 form-control" required step="0.25 "
+               th:field="*{rate}" type="text"/>
+    </div>
+
+    <div hidden class="col-md-12">
+        <label for="notes" class="form-label">Notes: </label>
+        <textarea id="notes"  class="rounded-0 form-control" maxlength="500" minlength="2"
+                  rows="3" th:field="*{notes}"></textarea>
+    </div>
+</div>

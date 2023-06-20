@@ -1,0 +1,64 @@
+
+<!--top bar navigation-->
+<nav th:fragment="nav_top">
+    <nav style="  "  class="navbar fixed-top bg-white border-bottom border-secondary-opacity-10">
+        <div class="container-fluid ">
+            <div class="fw-semibold fs-2">timepeace</div>
+            <span class="navbar-brand" th:inline="text"> Hello, <b>[[${contractor.firstname}]]</b>
+            <a th:href="@{/logout}" aria-label="logout button" title="logout" ><i class="bi bi-power fs-5"></i></a>
+            </span>
+        </div>
+    </nav>
+</nav>
+
+<!--left bar navigation-->
+<nav class="nav flex-column" th:fragment="nav_side_left">
+    <div id="side_menu">
+        <div id="wrapper">
+            <div id="menu-overlay"></div>
+            <li id="menu">
+                <ul class="ul_menu">
+                    <li class="parent">
+<!--                        <a class="link-dark text-decoration-none" th:href="@{/{id}/test (id=${contractor.id})}">timepeace</a>-->
+                    </li>
+                    <li class="parent"><a class="link-dark text-decoration-none" th:href="@{/{id}/test (id=${contractor.id})}">Dashboard</a>
+                    </li>
+                    <li  class="parent">Project
+                        <ul class="sub-nav">
+                            <li><a class="dropdown-item" th:href="@{/{id}/contractor (id=${contractor.id})}">View Projects</a></li>
+                            <li>  <a th:href="@{/{id}/project/new (id=${contractor.id})}">Add Project</a></li>
+                        </ul>
+                    </li>
+                    <li class="parent">Account
+                        <ul class="sub-nav">
+                            <li th:if="${listProfile.isEmpty()}">
+                                <a class="dropdown-item" th:href="@{/{id}/profile/new (id=${contractor.id})}">Profile Details</a>
+                            </li>
+                            <li th:each="prof: ${listProfile}" th:unless="${listProfile.isEmpty()}">
+                                <a class="dropdown-item" th:href="@{/{c_id}/profile/{id}/edit (id=${prof.cp_id}, c_id=${prof.contractor.id})}">Profile Details</a>
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{/edit/{id} (id=${contractor.id})}">Account Settings</a></li>
+                        </ul>
+                    </li>
+                </ul>
+        </div>
+        <script>
+        $(document).ready(function() {
+            $('.parent').on("click",function(){
+            $(this).find(".sub-nav").toggle();
+            $(this).siblings().find(".sub-nav").hide();
+            if($(".sub-nav:visible").length === 0 ){
+                $("#menu-overlay").hide();
+            }else {
+            $("#menu-overlay").show();
+            }
+            });
+            $("#menu-overlay").on("click",function(){
+            $(".sub-nav").hide();
+            $(this).hide();
+            });
+       });
+        </script>
+    </div>
+</nav>
+
