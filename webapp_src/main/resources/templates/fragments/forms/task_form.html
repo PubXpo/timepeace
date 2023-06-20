@@ -1,0 +1,121 @@
+
+<!--update task-->
+<div th:fragment="new_week" id="new_week" class="form-group row">
+    <div class="col-md-6">
+        <label style="display:none" for="weekOf" class="form-label">Week of: </label>
+        <input id="weekOf" class="form-control"  required th:field="*{weekOf}"  name="weekOf" th:value="weekOf" type="date"/>
+    </div>
+    <div  hidden class="col-md-6">
+        <label for="pID" class="col-4 col-form-label" >Project ID: </label>
+        <select id="pID" class="form-control"  th:field="*{project.p_id}" th:if="${task.t_id == null}">
+            <option th:text="${project.p_id}" th:value="${project.p_id}"></option>
+        </select>
+        <input  id="pID2" class="form-control"  th:field="*{project.p_id}" th:unless="${task.t_id == null}"
+               th:value="${project.p_id}"/>
+    </div>
+</div>
+
+
+
+<!--update task-->
+<div th:fragment="task" id="task" class="form-group row">
+
+        <div  class="col-md-6">
+            <label for="WeekOfSelection" class="form-label" >Week of: </label>
+            <select id="WeekOfSelection" disabled class="form-control rounded-0"  >
+                <option th:text="${thisWeek}" th:value="${thisWeek}"  ></option>
+            </select>
+        </div>
+        <div hidden class="col-md-6">
+            <label for="WeekOfSelectionHidden" class="form-label" >Week of: </label>
+            <select id="WeekOfSelectionHidden" class="form-control rounded-0"  th:field="*{weekOf}">
+                <option th:text="${thisWeek}" th:value="${thisWeek}"  ></option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="category" class="form-label">Category: </label>
+            <select id="category" required class="form-control rounded-0"  th:field="*{category}" type="text">
+                <th:block th:each="cat:${listCategories}">
+                <option  th:text="${cat.categoryName}"  th:value="${cat.categoryName}"  ></option>
+                </th:block>
+            </select>
+        </div>
+
+    <div>
+        <div class="col-md-12">
+            <label for="description" class="form-label">Description: </label>
+            <textarea id="description" class="form-control rounded-0" maxlength="500" minlength="2"
+                      required th:field="*{description}"  type="text"></textarea>
+        </div>
+    </div>
+
+          <div style="width:102px" class="col-md-2">
+            <label for="mon" class="form-label">Mon: </label>
+            <input id="mon" class="form-control rounded-0"  step="1" min="1" max="24"
+                   th:field="*{monday}" />
+        </div>
+        <div style="width:102px" class="col-md-2">
+            <label for="tue" class="form-label">Tue: </label>
+            <input id="tue" class="form-control rounded-0"  step="1"  min="1" max="24"
+                   th:field="*{tuesday}" />
+        </div>
+        <div style="width:102px"class="col-md-2">
+            <label for="wed" class="form-label">Wed: </label>
+            <input id="wed" class="form-control rounded-0"  step="1"  min="1" max="24"
+                   th:field="*{wednesday}" />
+        </div>
+        <div style="width:102px" class="col-md-2">
+            <label for="thu" class="form-label">Thur: </label>
+            <input id="thu" class="form-control rounded-0"  step="1"  min="1" max="24"
+                   th:field="*{thursday}" />
+        </div>
+        <div style="width:102px" class="col-md-2">
+            <label for="fri" class="form-label">Fri: </label>
+            <input id="fri" class="form-control rounded-0"  step="1"  min="1" max="24"
+                   th:field="*{friday}" />
+        </div>
+        <div style="width:102px" class="col-md-2">
+            <label for="sat" class="form-label">Sat: </label>
+            <input id="sat" class="form-control rounded-0"  step="1"  min="1" max="24"
+                   th:field="*{saturday}" />
+        </div>
+
+    <div style="width:102px" class="col-md-2">
+        <label for="sun" class="form-label">Sun: </label>
+        <input id="sun" class="form-control rounded-0"  step="1"  min="1" max="24"
+               th:field="*{sunday}" />
+    </div>
+
+    <div hidden class="col-md-6" >
+        <span  th:if="${task.t_id == null}">
+            <label for="totals" class="col-4 col-form-label" >TaskTotals ID: </label>
+        <select id="totals" class="form-control rounded-0"  th:field="*{taskTotals}">
+            <option th:text="${taskTotals?.tt_id}" th:value="${taskTotals?.tt_id}" ></option>
+        </select>
+        </span>
+        <span th:unless="${task.t_id  == null}">
+            <label for="totals1" class="col-4 col-form-label" >TaskTotals ID: </label>
+            <input id="totals1" class="form-control rounded-0"  th:field="*{taskTotals}"
+               th:value="${task.taskTotals}"/>
+        </span>
+
+    </div>
+
+
+    <div hidden  class="col-md-6">
+        <span th:if="${task.t_id == null}">
+            <label for="task_pID" class="col-4 col-form-label" >Project ID: </label>
+            <select id="task_pID" class="form-control rounded-0"  th:field="*{project.p_id}" >
+                <option th:text="${project.p_id}" th:value="${project.p_id}"></option>
+            </select>
+        </span>
+        <span th:unless="${task.t_id == null}">
+            <label for="task_pID1" class="col-4 col-form-label" >Project ID: </label>
+            <input id="task_pID1" class="form-control rounded-0"  th:field="*{project.p_id}"
+                           th:value="${project.p_id}"/>
+        </span>
+
+
+    </div>
+</div>
+
